@@ -2,22 +2,18 @@ import React from "react"
 
 type Props<T> = {
   items: T[]
-  children?: (item: T) => React.ReactNode
-  getKey?: (item: T) => string | number | undefined
+  className?: string
+  children?: (item: T, index: number) => React.ReactNode
 }
 
 export function List<T>({
   items,
-  children = (item) => item,
-  getKey
+  className = "",
+  children = (item, index) => <div key={index}>{item}</div>,
 }: Props<T>) {
   return (
-    <div>
-      {items.map((item, index) =>
-        <div key={getKey ? getKey(item) : index}>
-          {children(item)}
-        </div>
-      )}
+    <div className={className}>
+      {items.map(children)}
     </div>
   )
 }
